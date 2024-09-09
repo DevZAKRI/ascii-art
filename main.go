@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -20,27 +21,32 @@ func main() {
 		return
 	}
 
-	AsciiGraph, _ := readFile("banners/thinkertoy.txt")
+	AsciiGraph, _ := readFile("banners/standard.txt")
 
-	the_string := []string{}
-	for _, v := range os.Args[1] {
-		if v != '\n' {
-			for i := 8; i >= 0; i-- {
-				the_string = append(the_string, string(AsciiGraph[int((v-31)*(9))-i]))
+	f := strings.Split(os.Args[1], "\\n")
+	for o := 0; o < len(f); o++ {
+		the_string := []string{}
+		if f[o] != "" {
+			for _, v := range f[o] {
+				for i := 8; i >= 0; i-- {
+					the_string = append(the_string, string(AsciiGraph[int((v-31)*(9))-i]))
+				}
 			}
-		} else {
-			the_string = append(the_string, "2")
 		}
-	}
-	for i := 0; i < 8; i++ {
-		for j := 0; j < len(the_string); j += 9 {
-			if i+j >= len(the_string) {
-				break
+		for i := 0; i < 8; i++ {
+			for j := 0; j < len(the_string); j += 9 {
+				if i+j >= len(the_string) {
+					break
+				}
+				fmt.Printf(the_string[i+j])
 			}
-			fmt.Printf(the_string[i+j])
+			if f[o] != "" {
+				fmt.Println()
+			}
 		}
-		fmt.Println()
-
+		if  o < len(f)-2 {
+			fmt.Println()
+		}
 	}
 }
 
