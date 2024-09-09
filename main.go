@@ -22,10 +22,28 @@ func main() {
 
 	AsciiGraph, _ := readFile("banners/thinkertoy.txt")
 
-	fmt.Println(AsciiGraph)
+	the_string := []string{}
+	for _, v := range os.Args[1] {
+		if v != '\n' {
+			for i := 8; i >= 0; i-- {
+				the_string = append(the_string, string(AsciiGraph[int((v-31)*(9))-i]))
+			}
+		} else {
+			the_string = append(the_string, "2")
+		}
+	}
+	for i := 0; i < 8; i++ {
+		for j := 0; j < len(the_string); j += 9 {
+			if i+j >= len(the_string) {
+				break
+			}
+			fmt.Printf(the_string[i+j])
+		}
+		fmt.Println()
+
+	}
 }
 
-// word := "éà^¨¨¨"'"
 func validASCIIrune(word string) bool {
 	for _, r := range word {
 		if !(r >= 32 && r <= 126) && r != '\n' {
@@ -44,7 +62,7 @@ func readFile(fileName string) ([]string, error) {
 	var content []string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		content = append(content, scanner.Text()+"\n")
+		content = append(content, scanner.Text())
 	}
 	return content, scanner.Err()
 }
