@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	if len(os.Args) < 2 {
 		fmt.Println("Error u need to enter the STRING u want in a graphic representation using ASCII ")
 		return
@@ -21,7 +22,11 @@ func main() {
 		return
 	}
 
-	AsciiGraph, _ := readFile("banners/standard.txt")
+	AsciiGraph, err := readFile("banners/standard.txt")
+	if err != nil {
+		fmt.Println("error in reading file")
+		return
+	}
 
 	f := strings.Split(os.Args[1], "\\n")
 	for o := 0; o < len(f); o++ {
