@@ -18,7 +18,7 @@ func PrintLineAsAscii(line string, idx int, asciiGraph []string) {
 			}
 			fmt.Println()
 		}
-	} else if idx != 0 {
+	} else  {
 		fmt.Println()
 	}
 }

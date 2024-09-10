@@ -9,8 +9,8 @@ import (
 
 func main() {
 	// check if the input is valid
-	if ascii.ValidateInput() != "" {
-		print(ascii.ValidateInput())
+	if ascii.ValidateArgument(os.Args) != "" {
+		fmt.Println(ascii.ValidateArgument(os.Args))
 		return
 	}
 
