@@ -23,5 +23,5 @@ func main() {
 		return
 	}
 	// take the input and asciiGraph and and Process them
-	ascii.TheARTIST(input, asciiGraph)
+	ascii.Artist(input, asciiGraph)
 }
