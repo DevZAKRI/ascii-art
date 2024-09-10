@@ -1,79 +1,27 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strings"
+
+	ascii "ascii/artistTools"
 )
 
 func main() {
-
-	if len(os.Args) < 2 {
-		fmt.Println("Error u need to enter the STRING u want in a graphic representation using ASCII ")
-		return
-	} else if len(os.Args) > 2 {
-		fmt.Println("Only trait one STRING at once!!")
+	// check if the input is valid
+	if ascii.ValidateArgument(os.Args) != "" {
+		fmt.Println(ascii.ValidateArgument(os.Args))
 		return
 	}
+
 	input := os.Args[1]
-	if !validASCIIrune(input) {
-		fmt.Println("input Contain invalid characters")
+	// read the file containing the ascii graph represantation and put content in ascii Graph
+	// check for errors too in case file no longer exist
+	asciiGraph, err := ascii.ReadFile("banners/standard.txt")
+	if err != nil {
+		fmt.Println("Error reading file:", err)
 		return
 	}
-
-	AsciiGraph, err := readFile("banners/standard.txt")
-	if err != nil {
-		fmt.Println("error in reading file")
-		return
-	}
-
-	f := strings.Split(os.Args[1], "\\n")
-	for o := 0; o < len(f); o++ {
-		the_string := []string{}
-		if f[o] != "" {
-			for _, v := range f[o] {
-				for i := 8; i >= 0; i-- {
-					the_string = append(the_string, string(AsciiGraph[int((v-31)*(9))-i]))
-				}
-			}
-		}
-		for i := 0; i < 8; i++ {
-			for j := 0; j < len(the_string); j += 9 {
-				if i+j >= len(the_string) {
-					break
-				}
-				fmt.Printf(the_string[i+j])
-			}
-			if f[o] != "" {
-				fmt.Println()
-			}
-		}
-		if  o < len(f)-2 {
-			fmt.Println()
-		}
-	}
-}
-
-func validASCIIrune(word string) bool {
-	for _, r := range word {
-		if !(r >= 32 && r <= 126) && r != '\n' {
-			return false
-		}
-	}
-	return true
-}
-
-func readFile(fileName string) ([]string, error) {
-	file, err := os.Open(fileName)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-	var content []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		content = append(content, scanner.Text())
-	}
-	return content, scanner.Err()
+	// take the input and asciiGraph and and Process them
+	ascii.TheARTIST(input, asciiGraph)
 }
