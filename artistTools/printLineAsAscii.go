@@ -2,7 +2,7 @@ package ascii
 
 import "fmt"
 
-func PrintLineAsAscii(line string, idx int, asciiGraph []string) {
+func PrintLineAsAscii(line string, asciiGraph []string) {
 	var asciiChars []string
 	if line != "" {
 		for _, char := range line {

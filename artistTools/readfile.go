@@ -1,7 +1,6 @@
 package ascii
 
 import (
-	"bufio"
 	"os"
 )
 
@@ -13,10 +12,21 @@ func ReadFile(fileName string) ([]string, error) {
 	defer file.Close()
 
 	var content []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		content = append(content, scanner.Text())
+	singleByte := make([]byte, 1)
+	line := ""
+	for {
+		_, err = file.Read(singleByte)
+		if err != nil {
+			break
+		}
+		if singleByte[0] == '\n' {
+			content = append(content, line)
+			line = ""
+		} else {
+			line += string(singleByte)
+		}
 	}
-	content = append(content, "")
-	return content, scanner.Err()
+	content = append(content, line)
+	// content = append(content, "")
+	return content, nil
 }
