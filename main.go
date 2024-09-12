@@ -7,6 +7,9 @@ import (
 	ascii "ascii/artistTools"
 )
 
+// main is the entry point of the program.
+// it validates the input argument, prints any validation errors,
+// and then calls the Artist function to process the input.
 func main() {
 	// check if the input is valid
 	if ascii.ValidateArgument(os.Args) != "" {
