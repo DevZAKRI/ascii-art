@@ -16,6 +16,7 @@ func main() {
 		fmt.Println(ascii.ValidateArgument(os.Args))
 		return
 	}
+
 	input := os.Args[1]
 	// take the input and and Process it
 	ascii.Artist(input)
