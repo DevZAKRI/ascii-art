@@ -15,6 +15,7 @@ func ReadFile(fileName string) ([]string, error) {
 		return nil, err
 	}
 	defer file.Close()
+
 	var content []string
 	singleByte := make([]byte, 1)
 	line := ""
